@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Js</title>
+    <style>
+        #studenti {
+            display: block;
+            width: 100%;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="get-text-btn">Get Data</button>
+    <button id="remove-text-btn">Clear</button>
+    <textarea id="studenti" rows="30"></textarea>
+
+    <script>
+        class Student {
+
+            constructor(name, address, phone, course) {
+                this.name = name;
+                this.address = address;
+                this.phone = phone;
+                this.course = course;
+            }
+
+            getInfo() {
+                return "Name: " + this.name + "\n" +
+                    "Address " + this.address + "\n" +
+                    "Phone: " + this.phone + "\n" +
+                    "Course: " + this.course
+            }
+        }
+
+
+
+        let button = document.getElementById("get-text-btn");
+        let button1 = document.getElementById("remove-text-btn");
+        let studenti = document.getElementById("studenti");
+        let student_1 = document.querySelector('.student1');
+
+
+
+
+        button.addEventListener("click", function () {
+            fetch('https://v-dresevic.github.io/Advanced-JavaScript-Programming/data/students.txt').then(function (response) {
+                if (response.status !== 200) {
+                    throw Error("Error while reading file.");
+                }
+                return response.text();
+            }).then(function (text) {
+
+                let myArray = text.split("\n");
+                return myArray;
+
+                // for (let i = 0; i < myArray.length; i++) {
+                //     console.log(myArray[i]);
+                //     studenti.innerHTML = myArray[i];
+                // }
+
+            }).then(function (arr) {
+
+
+
+                var student1 = new Student(arr[0], arr[1], arr[2], arr[3]);
+                var student2 = new Student(arr[4], arr[5], arr[6], arr[7]);
+                var student3 = new Student(arr[8], arr[9], arr[10], arr[11]);
+                var student4 = new Student(arr[12], arr[13], arr[14], arr[15]);
+                var student5 = new Student(arr[16], arr[17], arr[18], arr[19]);
+                console.log(student1.getInfo() + "\n\n" + student2.getInfo() + "\n\n" + student3.getInfo() + "\n\n" + student4.getInfo() + "\n\n" + student5.getInfo());
+                studenti.innerHTML = student1.getInfo() + "\n\n" + student2.getInfo() + "\n\n" + student3.getInfo() + "\n\n" + student4.getInfo() + "\n\n" + student5.getInfo();
+
+
+
+
+            }).catch(function (err) {
+                studenti.innerHTML = 'Fetch problem: ' + err.message;
+            });
+        });
+
+        button1.addEventListener("click", function () {
+            studenti.innerHTML = "";
+        });
+
+
+
+
+    </script>
+</body>
+
+</html>
